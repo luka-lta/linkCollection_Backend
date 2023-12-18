@@ -27,9 +27,9 @@ class LinkObject
     {
         return new self(
             $payload['linkId'] ?? null,
-            $payload['name'] ?? '',
-            $payload['url'] ?? '',
-            $payload['displayname'] ?? ''
+            $payload['name'],
+            $payload['url'],
+            $payload['displayname'],
         );
     }
 
