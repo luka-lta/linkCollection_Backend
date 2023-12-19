@@ -7,7 +7,7 @@ use LinkCollectionBackend\Service\LinkActionService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class LinkGetAction extends AbstractActionHandler
+class LinkUpdateAction extends AbstractActionHandler
 {
     public function __construct(
         private readonly LinkActionService $actionService
@@ -15,9 +15,9 @@ class LinkGetAction extends AbstractActionHandler
     {
     }
 
-    public function handleLinkGetAction(ResponseInterface $response): ResponseInterface
+    public function handleLinkUpdateAction(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        $message = $this->actionService->getAllLinks();
+        $message = $this->actionService->updateLink($request->getParsedBody());
         return $this->buildResponse($response, $message);
     }
 }

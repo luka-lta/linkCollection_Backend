@@ -7,17 +7,17 @@ use LinkCollectionBackend\Service\LinkActionService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class LinkGetAction extends AbstractActionHandler
+class LinkDeleteAction extends AbstractActionHandler
 {
     public function __construct(
-        private readonly LinkActionService $actionService
+        private readonly LinkActionService $actionService,
     )
     {
     }
 
-    public function handleLinkGetAction(ResponseInterface $response): ResponseInterface
+    public function handleLinkDeleteAction(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        $message = $this->actionService->getAllLinks();
+        $message = $this->actionService->deleteLink((int)$request->getQueryParams()['linkId']);
         return $this->buildResponse($response, $message);
     }
 }

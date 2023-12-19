@@ -46,6 +46,35 @@ class LinkActionService
         return $this->createResponseMessage($message, $code);
     }
 
+    public function updateLink(array $payload): array
+    {
+        try {
+            $linkObject = $this->createNewLinkObject($payload);
+            $this->linkObjectRepository->updateLink($linkObject);
+            $code = 201;
+            $message = 'Link updated';
+        } catch (LinkCollectionException $exception) {
+            $message = $exception->getMessage();
+            $code = 500;
+        }
+
+        return $this->createResponseMessage($message, $code);
+    }
+
+    public function deleteLink(int $linkId): array
+    {
+        try {
+            $this->linkObjectRepository->deleteLink($linkId);
+            $code = 200;
+            $message = 'Link deleted';
+        } catch (LinkCollectionException $exception) {
+            $message = $exception->getMessage();
+            $code = 500;
+        }
+
+        return $this->createResponseMessage($message, $code);
+    }
+
     /**
      * @throws InvalidBodyDataException
      * @throws ValidationFailureException

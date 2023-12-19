@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace LinkCollectionBackend\Route;
 
 use LinkCollectionBackend\Action\LinkCreateAction;
+use LinkCollectionBackend\Action\LinkDeleteAction;
 use LinkCollectionBackend\Action\LinkGetAction;
+use LinkCollectionBackend\Action\LinkUpdateAction;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
@@ -14,8 +16,10 @@ class Routes
     {
         $app->group('/api/v1', function (RouteCollectorProxy $group) {
             $group->group('/links', function (RouteCollectorProxy $links) {
-                $links->post('', [LinkCreateAction::class, 'handleLinkCreateAction']);
+                $links->put('', [LinkCreateAction::class, 'handleLinkCreateAction']);
                 $links->get('', [LinkGetAction::class, 'handleLinkGetAction']);
+                $links->post('', [LinkUpdateAction::class, 'handleLinkUpdateAction']);
+                $links->delete('', [LinkDeleteAction::class, 'handleLinkDeleteAction']);
             });
         });
     }

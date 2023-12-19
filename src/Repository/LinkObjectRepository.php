@@ -7,6 +7,7 @@ use LinkCollectionBackend\Exception\DatabaseErrorException;
 use LinkCollectionBackend\Exception\LinkNotFoundException;
 use LinkCollectionBackend\Value\LinkObject;
 use PDO;
+use PDOException;
 
 class LinkObjectRepository
 {
@@ -27,7 +28,7 @@ class LinkObjectRepository
             $statement = $this->database->prepare($sql);
             $statement->execute();
             return $statement->fetchAll();
-        } catch (\PDOException $exception) {
+        } catch (PDOException $exception) {
             throw new DatabaseErrorException('Could not fetch links', 0, $exception);
         }
     }
@@ -47,7 +48,7 @@ class LinkObjectRepository
                 'url' => $linkObject->getUrl(),
                 'displayname' => $linkObject->getDisplayName()
             ]);
-        } catch (\PDOException $exception) {
+        } catch (PDOException $exception) {
             throw new DatabaseErrorException('Could not create new link', 0, $exception);
         }
     }
@@ -70,8 +71,34 @@ class LinkObjectRepository
             $statement->execute([
                 'linkId' => $linkId
             ]);
-        } catch (\PDOException $exception) {
+        } catch (PDOException $exception) {
             throw new DatabaseErrorException('Could not delete link', 0, $exception);
+        }
+    }
+
+    /**
+     * @throws DatabaseErrorException
+     * @throws LinkNotFoundException
+     */
+    public function updateLink(LinkObject $linkObject): void
+    {
+        if (!$this->existsLink($linkObject->getLinkId())) {
+            throw new LinkNotFoundException('Link does not exist');
+        }
+
+        $sql = <<<SQL
+            UPDATE link_list SET name = :name, url = :url, displayname = :displayname WHERE id = :linkId
+        SQL;
+        try {
+            $statement = $this->database->prepare($sql);
+            $statement->execute([
+                'name' => $linkObject->getName(),
+                'url' => $linkObject->getUrl(),
+                'displayname' => $linkObject->getDisplayName(),
+                'linkId' => $linkObject->getLinkId()
+            ]);
+        } catch (PDOException $exception) {
+            throw new DatabaseErrorException('Could not update link', 0, $exception);
         }
     }
 
