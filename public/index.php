@@ -4,6 +4,7 @@ use DI\Bridge\Slim\Bridge;
 use DI\DependencyException;
 use DI\NotFoundException;
 use LinkCollectionBackend\Factory\ContainerFactory;
+use LinkCollectionBackend\Middleware\PreflightMiddleware;
 use LinkCollectionBackend\Repository\EnvironmentRepository;
 use LinkCollectionBackend\Route\Routes;
 
@@ -26,5 +27,6 @@ try {
 }
 
 $app->addBodyParsingMiddleware();
+$app->add(new PreflightMiddleware());
 Routes::getRoutes($app);
 $app->run();

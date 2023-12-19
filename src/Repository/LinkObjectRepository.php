@@ -45,7 +45,7 @@ class LinkObjectRepository
             $statement->execute([
                 'name' => $linkObject->getName(),
                 'url' => $linkObject->getUrl(),
-                'displayname' => $linkObject->getDisplayname()
+                'displayname' => $linkObject->getDisplayName()
             ]);
         } catch (\PDOException $exception) {
             throw new DatabaseErrorException('Could not create new link', 0, $exception);

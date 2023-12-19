@@ -8,14 +8,14 @@ class LinkObject
     private ?int $linkId;
     private string $name;
     private string $url;
-    private string $displayname;
+    private string $displayName;
 
     private function __construct(?int $linkId, string $name, string $url, string $displayname)
     {
         $this->linkId = $linkId;
         $this->name = $name;
         $this->url = $url;
-        $this->displayname = $displayname;
+        $this->displayName = $displayname;
     }
 
     public static function from(string $name, string $url, string $displayname): self
@@ -29,7 +29,7 @@ class LinkObject
             $payload['linkId'] ?? null,
             $payload['name'],
             $payload['url'],
-            $payload['displayname'],
+            $payload['displayName'],
         );
     }
 
@@ -48,8 +48,8 @@ class LinkObject
         return $this->url;
     }
 
-    public function getDisplayname(): string
+    public function getDisplayName(): string
     {
-        return $this->displayname;
+        return $this->displayName;
     }
 }

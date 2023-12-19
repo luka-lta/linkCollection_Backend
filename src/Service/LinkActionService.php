@@ -9,11 +9,11 @@ use LinkCollectionBackend\Exception\ValidationFailureException;
 use LinkCollectionBackend\Repository\LinkObjectRepository;
 use LinkCollectionBackend\Value\LinkObject;
 
-readonly class LinkActionService
+class LinkActionService
 {
     public function __construct(
-        private LinkObjectRepository $linkObjectRepository,
-        private ValidationService    $validationService,
+        private readonly LinkObjectRepository $linkObjectRepository,
+        private readonly ValidationService    $validationService,
     )
     {
     }
@@ -60,7 +60,7 @@ readonly class LinkActionService
             throw new InvalidBodyDataException('Url is required');
         }
 
-        if (!isset($payload['displayname'])) {
+        if (!isset($payload['displayName'])) {
             throw new InvalidBodyDataException('Displayname is required');
         }
 
@@ -72,7 +72,7 @@ readonly class LinkActionService
             throw new InvalidBodyDataException('Url is invalid');
         }
 
-        if (!$this->validationService->validateString($payload['displayname'])) {
+        if (!$this->validationService->validateString($payload['displayName'])) {
             throw new InvalidBodyDataException('Displayname is invalid');
         }
 
