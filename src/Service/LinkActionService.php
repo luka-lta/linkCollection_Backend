@@ -9,7 +9,7 @@ use LinkCollectionBackend\Exception\ValidationFailureException;
 use LinkCollectionBackend\Repository\LinkObjectRepository;
 use LinkCollectionBackend\Value\LinkObject;
 
-class LinkActionService
+class LinkActionService extends AbstractActionService
 {
     public function __construct(
         private readonly LinkObjectRepository $linkObjectRepository,
@@ -106,13 +106,5 @@ class LinkActionService
         }
 
         return LinkObject::fromPayload($payload);
-    }
-
-    private function createResponseMessage(string|array $message, int $code): array
-    {
-        return [
-            'statusCode' => $code,
-            'message' => $message,
-        ];
     }
 }

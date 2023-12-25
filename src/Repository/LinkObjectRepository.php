@@ -39,7 +39,7 @@ class LinkObjectRepository
     public function createNewLink(LinkObject $linkObject): void
     {
         $sql = <<<SQL
-            INSERT INTO link_list (name, url, displayname) VALUES (:name, :url, :displayname)
+            INSERT INTO link_list (name, url, displayName) VALUES (:name, :url, :displayname)
         SQL;
         try {
             $statement = $this->database->prepare($sql);
@@ -49,6 +49,7 @@ class LinkObjectRepository
                 'displayname' => $linkObject->getDisplayName()
             ]);
         } catch (PDOException $exception) {
+            var_dump($exception->getMessage());
             throw new DatabaseErrorException('Could not create new link', 0, $exception);
         }
     }
@@ -64,7 +65,7 @@ class LinkObjectRepository
         }
 
         $sql = <<<SQL
-            DELETE FROM link_list WHERE id = :linkId
+            DELETE FROM link_list WHERE linkId = :linkId
         SQL;
         try {
             $statement = $this->database->prepare($sql);
@@ -87,7 +88,7 @@ class LinkObjectRepository
         }
 
         $sql = <<<SQL
-            UPDATE link_list SET name = :name, url = :url, displayname = :displayname WHERE id = :linkId
+            UPDATE link_list SET name = :name, url = :url, displayName = :displayname WHERE linkId = :linkId
         SQL;
         try {
             $statement = $this->database->prepare($sql);
@@ -105,7 +106,7 @@ class LinkObjectRepository
     public function existsLink(int $linkId): bool
     {
         $sql = <<<SQL
-            SELECT * FROM link_list WHERE id = :linkId
+            SELECT * FROM link_list WHERE linkId = :linkId
         SQL;
         $statement = $this->database->prepare($sql);
         $statement->execute([

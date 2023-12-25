@@ -7,6 +7,7 @@ use LinkCollectionBackend\Action\LinkCreateAction;
 use LinkCollectionBackend\Action\LinkDeleteAction;
 use LinkCollectionBackend\Action\LinkGetAction;
 use LinkCollectionBackend\Action\LinkUpdateAction;
+use LinkCollectionBackend\Action\StatsAction;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
@@ -20,6 +21,7 @@ class Routes
                 $links->get('', [LinkGetAction::class, 'handleLinkGetAction']);
                 $links->post('', [LinkUpdateAction::class, 'handleLinkUpdateAction']);
                 $links->delete('', [LinkDeleteAction::class, 'handleLinkDeleteAction']);
+                $links->get('/stats', [StatsAction::class, 'handleStatsAction']);
             });
         });
     }

@@ -37,7 +37,7 @@ services:
       - '3306'
     volumes:
       - linkcollectionData:/var/lib/mysql:rw
-      - ./docker/mysql:/docker-entrypoint-initdb.d
+      - ./data/mysql:/docker-entrypoint-initdb.d/:ro
 
   phpmyadmin:
     image: phpmyadmin
