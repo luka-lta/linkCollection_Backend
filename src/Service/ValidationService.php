@@ -15,6 +15,14 @@ class ValidationService
         return true;
     }
 
+    public function validateEmail(string $email): bool
+    {
+        if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * @throws ValidationFailureException
      */
@@ -28,8 +36,20 @@ class ValidationService
             throw new ValidationFailureException('String cannot be longer than 255 characters');
         }
 
-        if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $string)) {
+        if (preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬]/', $string)) {
             throw new ValidationFailureException('String cannot contain special characters');
+        }
+
+        return true;
+    }
+
+    /**
+     * @throws ValidationFailureException
+     */
+    public function validateInt(mixed $int): bool
+    {
+        if (is_int($int) === false) {
+            throw new ValidationFailureException('Value must be an integer');
         }
 
         return true;

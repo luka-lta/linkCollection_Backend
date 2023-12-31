@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace LinkCollectionBackend\Action;
+namespace LinkCollectionBackend\Action\Link;
 
-use LinkCollectionBackend\Service\LinkActionService;
+use LinkCollectionBackend\Action\AbstractActionHandler;
+use LinkCollectionBackend\Service\Link\LinkActionService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
